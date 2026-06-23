@@ -1,8 +1,8 @@
 export default function TasksPage() {
   return (
-    <main>
-      <h1>Tasks</h1>
-      <p>Manage your tasks here.</p>
-    </main>
+    <div>
+      <h1 className="text-3xl font-bold">Tasks</h1>
+      <p className="mt-4">Manage your tasks here.</p>
+    </div>
   );
 }

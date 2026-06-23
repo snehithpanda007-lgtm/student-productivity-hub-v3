@@ -1,8 +1,8 @@
 export default function SettingsPage() {
   return (
-    <main>
-      <h1>Settings</h1>
-      <p>Customize your application.</p>
-    </main>
+    <div>
+      <h1 className="text-3xl font-bold">Settings</h1>
+      <p className="mt-4">Configure your application settings.</p>
+    </div>
   );
 }

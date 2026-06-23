@@ -1,8 +1,8 @@
 export default function NotesPage() {
   return (
-    <main>
-      <h1>Notes</h1>
-      <p>Store and organize your notes.</p>
-    </main>
+    <div>
+      <h1 className="text-3xl font-bold">Notes</h1>
+      <p className="mt-4">Store your notes here.</p>
+    </div>
   );
 }
