@@ -19,7 +19,7 @@ export default function TaskForm({ onAdd }: Props) {
   return (
     <div className="flex gap-2 mb-6">
       <input
-        className="border p-2 rounded flex-1 hover:bg-gray-900"
+        className="bg-gray-900 p-2 rounded flex-1 hover:bg-gray-800"
         placeholder="New Task"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
@@ -27,7 +27,7 @@ export default function TaskForm({ onAdd }: Props) {
 
       <button
         onClick={handleSubmit}
-        className="bg-blue-500 text-white px-4 rounded cursor-pointer hover:bg-blue-400"
+        className="bg-blue-600 text-white px-4 rounded cursor-pointer hover:bg-blue-700"
       >
         Add
       </button>

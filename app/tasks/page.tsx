@@ -10,18 +10,25 @@ import FilterBar from "./components/FilterBar";
 export default function TasksPage() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [filter, setFilter] = useState("all");
+  const [isLoaded, setIsLoaded] = useState(false);
 
+  // Load tasks once
   useEffect(() => {
     const saved = localStorage.getItem("tasks");
 
     if (saved) {
       setTasks(JSON.parse(saved));
     }
+
+    setIsLoaded(true);
   }, []);
 
+  // Save tasks only after loading is complete
   useEffect(() => {
+    if (!isLoaded) return;
+
     localStorage.setItem("tasks", JSON.stringify(tasks));
-  }, [tasks]);
+  }, [tasks, isLoaded]);
 
   function addTask(title: string) {
     const newTask: Task = {
@@ -30,16 +37,16 @@ export default function TasksPage() {
       completed: false,
     };
 
-    setTasks([...tasks, newTask]);
+    setTasks((prev) => [...prev, newTask]);
   }
 
   function deleteTask(id: number) {
-    setTasks(tasks.filter((task) => task.id !== id));
+    setTasks((prev) => prev.filter((task) => task.id !== id));
   }
 
   function toggleTask(id: number) {
-    setTasks(
-      tasks.map((task) =>
+    setTasks((prev) =>
+      prev.map((task) =>
         task.id === id
           ? { ...task, completed: !task.completed }
           : task
@@ -66,11 +73,17 @@ export default function TasksPage() {
         setFilter={setFilter}
       />
 
-      <TaskList
-        tasks={filteredTasks}
-        onDelete={deleteTask}
-        onToggle={toggleTask}
-      />
+      {filteredTasks.length === 0 ? (
+        <p className="text-gray-500 mt-6">
+          No tasks found.
+        </p>
+      ) : (
+        <TaskList
+          tasks={filteredTasks}
+          onDelete={deleteTask}
+          onToggle={toggleTask}
+        />
+      )}
     </main>
   );
 }

@@ -12,7 +12,7 @@ export default function FilterBar({ filter, setFilter }: Props) {
           onClick={() => setFilter(item)}
           className={`px-3 py-1 rounded cursor-pointer ${
             filter === item
-              ? "bg-blue-500 hover:bg-blue-400 text-white"
+              ? "bg-blue-600 hover:bg-blue-700 text-white"
               : "bg-gray-900 hover:bg-gray-800"
           }`}
         >

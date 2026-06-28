@@ -28,7 +28,7 @@ export default function NoteForm({
         placeholder="Title"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
-        className="w-full border rounded-md p-3 mb-4"
+        className="bg-gray-800 w-full rounded-md p-3 mb-4 hover:bg-gray-700"
       />
 
       <textarea
@@ -36,7 +36,7 @@ export default function NoteForm({
         value={content}
         onChange={(e) => setContent(e.target.value)}
         rows={6}
-        className="w-full border rounded-md p-3 mb-4"
+        className="bg-gray-800 w-full rounded-md p-3 mb-4 hover:bg-gray-700"
       />
 
       <button

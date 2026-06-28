@@ -29,7 +29,7 @@ export default function TaskItem({
 
       <button
         onClick={() => onDelete(task.id)}
-        className="text-red-500 cursor-pointer hover:text-red-400"
+        className="text-red-600 cursor-pointer hover:text-red-700"
       >
         Delete
       </button>

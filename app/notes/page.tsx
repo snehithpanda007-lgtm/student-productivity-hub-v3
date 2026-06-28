@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Note } from "./types";
+
 import NoteForm from "./components/NoteForm";
 import NotesList from "./components/NotesList";
 
@@ -10,18 +11,25 @@ export default function NotesPage() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [editingId, setEditingId] = useState<number | null>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
 
+  // Load notes once
   useEffect(() => {
     const storedNotes = localStorage.getItem("notes");
 
     if (storedNotes) {
       setNotes(JSON.parse(storedNotes));
     }
+
+    setIsLoaded(true);
   }, []);
 
+  // Save notes only after loading
   useEffect(() => {
+    if (!isLoaded) return;
+
     localStorage.setItem("notes", JSON.stringify(notes));
-  }, [notes]);
+  }, [notes, isLoaded]);
 
   const clearForm = () => {
     setTitle("");
@@ -44,7 +52,9 @@ export default function NotesPage() {
   };
 
   const deleteNote = (id: number) => {
-    setNotes((prev) => prev.filter((note) => note.id !== id));
+    setNotes((prev) =>
+      prev.filter((note) => note.id !== id)
+    );
   };
 
   const editNote = (note: Note) => {
@@ -87,11 +97,17 @@ export default function NotesPage() {
         editing={editingId !== null}
       />
 
-      <NotesList
-        notes={notes}
-        onEdit={editNote}
-        onDelete={deleteNote}
-      />
+      {notes.length === 0 ? (
+        <p className="text-gray-500 mt-6">
+          No notes created yet.
+        </p>
+      ) : (
+        <NotesList
+          notes={notes}
+          onEdit={editNote}
+          onDelete={deleteNote}
+        />
+      )}
 
     </div>
   );
