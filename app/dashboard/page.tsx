@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { createClient } from "@/lib/supabase/client";
+import { useRouter } from "next/navigation";
 
 interface Task {
   id: number;
@@ -15,21 +17,37 @@ interface Note {
 }
 
 export default function DashboardPage() {
+  const router = useRouter();
+  const supabase = createClient();
+
   const [tasks, setTasks] = useState<Task[]>([]);
   const [notes, setNotes] = useState<Note[]>([]);
 
   useEffect(() => {
-    const storedTasks = localStorage.getItem("tasks");
-    const storedNotes = localStorage.getItem("notes");
+    async function loadDashboard() {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
 
-    if (storedTasks) {
-      setTasks(JSON.parse(storedTasks));
+      if (!user) {
+        router.replace("/login");
+        return;
+      }
+
+      const storedTasks = localStorage.getItem("tasks");
+      const storedNotes = localStorage.getItem("notes");
+
+      if (storedTasks) {
+        setTasks(JSON.parse(storedTasks));
+      }
+
+      if (storedNotes) {
+        setNotes(JSON.parse(storedNotes));
+      }
     }
 
-    if (storedNotes) {
-      setNotes(JSON.parse(storedNotes));
-    }
-  }, []);
+    loadDashboard();
+  }, [router, supabase]);
 
   const completedTasks = tasks.filter((task) => task.completed).length;
   const pendingTasks = tasks.filter((task) => !task.completed).length;
