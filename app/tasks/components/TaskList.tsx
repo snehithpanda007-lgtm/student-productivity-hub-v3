@@ -3,8 +3,8 @@ import TaskItem from "./TaskItem";
 
 interface Props {
   tasks: Task[];
-  onDelete: (id: number) => void;
-  onToggle: (id: number) => void;
+  onDelete: (id: string) => void;
+  onToggle: (id: string) => void;
 }
 
 export default function TaskList({

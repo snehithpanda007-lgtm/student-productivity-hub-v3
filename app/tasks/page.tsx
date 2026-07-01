@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Task } from "./types";
+import { useEffect, useMemo, useState } from "react";
+import { createClient } from "@/lib/supabase/client";
 
+import { Task } from "./types";
 import TaskForm from "./components/TaskForm";
 import TaskList from "./components/TaskList";
 import FilterBar from "./components/FilterBar";
@@ -10,41 +11,86 @@ import FilterBar from "./components/FilterBar";
 export default function TasksPage() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [filter, setFilter] = useState("all");
-  const [isLoaded, setIsLoaded] = useState(false);
 
-  // Load tasks once
-  useEffect(() => {
-    const saved = localStorage.getItem("tasks");
+  const supabase = useMemo(() => createClient(), []);
 
-    if (saved) {
-      setTasks(JSON.parse(saved));
+  async function loadTasks() {
+    const { data, error } = await supabase
+      .from("tasks")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.error("Error loading tasks:", error);
+      return;
     }
 
-    setIsLoaded(true);
-  }, []);
+    setTasks(data);
+  }
 
-  // Save tasks only after loading is complete
   useEffect(() => {
-    if (!isLoaded) return;
+    loadTasks();
+  }, [supabase]);
 
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-  }, [tasks, isLoaded]);
+  async function addTask(title: string) {
+    const { data, error } = await supabase
+      .from("tasks")
+      .insert([
+        {
+          title,
+          completed: false,
+        },
+      ])
+      .select()
+      .single();
 
-  function addTask(title: string) {
-    const newTask: Task = {
-      id: Date.now(),
-      title,
-      completed: false,
-    };
+    if (error) {
+      console.error("Error adding task:", error);
+      return;
+    }
 
-    setTasks((prev) => [...prev, newTask]);
+    setTasks((prev) => [data, ...prev]);
+
+    // Alternatively:
+    // await loadTasks();
   }
 
-  function deleteTask(id: number) {
-    setTasks((prev) => prev.filter((task) => task.id !== id));
+  async function deleteTask(id: string) {
+    const { error } = await supabase
+      .from("tasks")
+      .delete()
+      .eq("id", id);
+
+    if (error) {
+      console.error("Error deleting task:", error);
+      return;
+    }
+
+    setTasks((prev) =>
+      prev.filter((task) => task.id !== id)
+    );
+
+    // Alternatively:
+    // await loadTasks();
   }
 
-  function toggleTask(id: number) {
+  async function toggleTask(id: string) {
+    const task = tasks.find((t) => t.id === id);
+
+    if (!task) return;
+
+    const { error } = await supabase
+      .from("tasks")
+      .update({
+        completed: !task.completed,
+      })
+      .eq("id", id);
+
+    if (error) {
+      console.error("Error updating task:", error);
+      return;
+    }
+
     setTasks((prev) =>
       prev.map((task) =>
         task.id === id
@@ -52,6 +98,9 @@ export default function TasksPage() {
           : task
       )
     );
+
+    // Alternatively:
+    // await loadTasks();
   }
 
   const filteredTasks = tasks.filter((task) => {

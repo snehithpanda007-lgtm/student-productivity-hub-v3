@@ -4,8 +4,8 @@ import { Task } from "../types"
 
 interface Props {
   task: Task;
-  onDelete: (id: number) => void;
-  onToggle: (id: number) => void;
+  onDelete: (id: string) => void;
+  onToggle: (id: string) => void;
 }
 
 export default function TaskItem({
