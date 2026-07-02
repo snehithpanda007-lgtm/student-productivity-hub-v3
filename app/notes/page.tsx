@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { createClient } from "@/lib/supabase/client";
 import { Note } from "./types";
 
 import NoteForm from "./components/NoteForm";
@@ -10,26 +11,28 @@ export default function NotesPage() {
   const [notes, setNotes] = useState<Note[]>([]);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [editingId, setEditingId] = useState<number | null>(null);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
 
-  // Load notes once
+  const supabase = useMemo(() => createClient(), []);
+
   useEffect(() => {
-    const storedNotes = localStorage.getItem("notes");
-
-    if (storedNotes) {
-      setNotes(JSON.parse(storedNotes));
-    }
-
-    setIsLoaded(true);
+  fetchNotes();
   }, []);
 
-  // Save notes only after loading
-  useEffect(() => {
-    if (!isLoaded) return;
+  const fetchNotes = async () => {
 
-    localStorage.setItem("notes", JSON.stringify(notes));
-  }, [notes, isLoaded]);
+    const { data, error } = await supabase
+      .from("notes")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.error(error);
+      return;
+    }
+
+    setNotes(data ?? []);
+  };
 
   const clearForm = () => {
     setTitle("");
@@ -37,24 +40,35 @@ export default function NotesPage() {
     setEditingId(null);
   };
 
-  const addNote = () => {
+  const addNote = async () => {
     if (!title.trim() || !content.trim()) return;
 
-    const newNote: Note = {
-      id: Date.now(),
+    const { error } = await supabase.from("notes").insert({
       title,
       content,
-    };
+    });
 
-    setNotes((prev) => [...prev, newNote]);
+    if (error) {
+      console.error(error);
+      return;
+    }
 
     clearForm();
+    fetchNotes();
   };
 
-  const deleteNote = (id: number) => {
-    setNotes((prev) =>
-      prev.filter((note) => note.id !== id)
-    );
+  const deleteNote = async (id: string) => {
+    const { error } = await supabase
+      .from("notes")
+      .delete()
+      .eq("id", id);
+
+    if (error) {
+      console.error(error);
+      return;
+    }
+
+    fetchNotes();
   };
 
   const editNote = (note: Note) => {
@@ -63,22 +77,24 @@ export default function NotesPage() {
     setEditingId(note.id);
   };
 
-  const updateNote = () => {
+  const updateNote = async () => {
     if (!title.trim() || !content.trim()) return;
 
-    setNotes((prev) =>
-      prev.map((note) =>
-        note.id === editingId
-          ? {
-              ...note,
-              title,
-              content,
-            }
-          : note
-      )
-    );
+    const { error } = await supabase
+      .from("notes")
+      .update({
+        title,
+        content,
+      })
+      .eq("id", editingId);
+
+    if (error) {
+      console.error(error);
+      return;
+    }
 
     clearForm();
+    fetchNotes();
   };
 
   return (

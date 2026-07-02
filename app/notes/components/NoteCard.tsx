@@ -5,7 +5,7 @@ import { Note } from "../types";
 type Props = {
   note: Note;
   onEdit: (note: Note) => void;
-  onDelete: (id: number) => void;
+  onDelete: (id: string) => void;
 };
 
 export default function NoteCard({

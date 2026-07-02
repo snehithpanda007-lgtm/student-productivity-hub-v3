@@ -1,5 +1,7 @@
-export type Note = {
-  id: number;
+export interface Note {
+  id: string;
   title: string;
   content: string;
-};
+  created_at: string;
+  user_id: string;
+}

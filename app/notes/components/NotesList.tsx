@@ -6,7 +6,7 @@ import NoteCard from "./NoteCard";
 type Props = {
   notes: Note[];
   onEdit: (note: Note) => void;
-  onDelete: (id: number) => void;
+  onDelete: (id: string) => void;
 };
 
 export default function NotesList({
