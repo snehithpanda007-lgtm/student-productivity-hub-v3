@@ -1,21 +1,24 @@
-# 📚 Student Productivity Hub v2
+# 📚 Student Productivity Hub v3
 
-A modern productivity web application built with **Next.js**, **TypeScript**, and **Tailwind CSS**. It helps students organize tasks and notes through a clean, responsive dashboard.
+A full-stack productivity web application built with **Next.js**, **TypeScript**, **Tailwind CSS**, and **Supabase**. It helps students securely manage tasks and notes with cloud storage and authentication.
 
 ## ✨ Features
 
-* 📊 Dashboard with productivity statistics
-* ✅ Task management (add, complete, delete, and filter tasks)
-* 📝 Notes management (create, edit, and delete notes)
-* ⚙️ Settings page
-* 📱 Responsive design
-* 💾 Local Storage for data persistence
+* 🔐 User Authentication (Sign Up, Login, Logout)
+* 📊 Personalized Dashboard
+* ✅ Cloud-based Task Management (CRUD)
+* 📝 Cloud-based Notes Management (CRUD)
+* 🔒 Protected Routes & Row-Level Security (RLS)
+* 📱 Responsive Design
 
 ## 📸 Screenshots
 
-* ![Dashboard](DashboardSection.png)
-* ![Tasks](TasksSection.png)
-* ![Notes](NotesSection.png)
+* ![Home](screenshots/Home.png)
+* ![Dashboard](screenshots/Dashboard.png)
+* ![Tasks](screenshots/Tasks.png)
+* ![Notes](screenshots/Notes.png)
+* ![Login](screenshots/Login.png)
+* ![Signup](screenshots/Signup.png)
 
 ## 🛠 Tech Stack
 
@@ -23,46 +26,43 @@ A modern productivity web application built with **Next.js**, **TypeScript**, an
 * React
 * TypeScript
 * Tailwind CSS
-* Local Storage
+* Supabase
+* PostgreSQL
 * Vercel
 
 ## 🚀 Getting Started
 
-Clone the repository:
-
 ```bash
-git clone https://github.com/yourusername/student-productivity-hub-v2.git
-```
-
-Go to the project folder:
-
-```bash
-cd student-productivity-hub-v2
-```
-
-Install dependencies:
-
-```bash
+git clone https://github.com/snehithpanda007-lgtm/student-productivity-hub-v3.git
+cd student-productivity-hub-v3
 npm install
 ```
 
-Start the development server:
+Create a `.env.local` file:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=your_project_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
+```
+
+Run the app:
 
 ```bash
 npm run dev
 ```
 
-Open your browser and visit:
+Visit: `http://localhost:3000`
 
-```
-http://localhost:3000
-```
+## 🔒 Security
 
-## 🔮 Future Improvements
+* Supabase Authentication
+* Row-Level Security (RLS)
+* Protected Routes
 
-* User authentication
-* Database integration
-* Dark mode
-* Markdown support for notes
-* Task priorities and due dates
-* Search and filtering
+## 🚀 Live Demo
+
+https://student-productivity-hub-v3.vercel.app
+
+## 💻 GitHub
+
+https://github.com/snehithpanda007-lgtm/student-productivity-hub-v3
