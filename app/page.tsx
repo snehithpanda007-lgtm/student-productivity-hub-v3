@@ -1,33 +1,57 @@
-export default function HomePage() {
+import Link from "next/link";
+import { createClient } from "@/lib/supabase/server";
+
+export default async function HomePage() {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
   return (
-    <main className="min-h-screen text-white flex items-center justify-center px-6">
+    <main className="min-h-screen bg-gray-900 text-white flex items-center justify-center px-6">
       <div className="max-w-3xl text-center">
         <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight">
           Student Productivity Hub
         </h1>
 
         <p className="mt-6 text-lg md:text-xl text-gray-300 leading-relaxed">
-          Stay organized with a single platform to manage your
-          <span className="font-semibold text-white"> tasks</span>,
-          <span className="font-semibold text-white"> notes</span>, and
-          <span className="font-semibold text-white"> productivity</span>.
+          Stay organized with a single platform to manage your{" "}
+          <span className="font-semibold text-white">tasks</span>,{" "}
+          <span className="font-semibold text-white">notes</span>, and{" "}
+          <span className="font-semibold text-white">productivity</span>.
         </p>
 
-        <div className="mt-10 flex flex-col sm:flex-row justify-center gap-4">
-          <a
-            href="/signup"
-            className="rounded-lg bg-white px-6 py-3 font-semibold text-gray-900 transition hover:bg-gray-200"
-          >
-            Get Started
-          </a>
+        {user ? (
+          <div className="mt-10">
+            <p className="mb-4 text-gray-400">
+              Welcome back, <span className="text-white">{user.email}</span>
+            </p>
 
-          <a
-            href="/login"
-            className="rounded-lg border border-gray-600 px-6 py-3 font-semibold text-white transition hover:bg-gray-800"
-          >
-            Login
-          </a>
-        </div>
+            <Link
+              href="/dashboard"
+              className="inline-block rounded-lg bg-white px-6 py-3 font-semibold text-gray-900 transition hover:bg-gray-200"
+            >
+              Go to Dashboard
+            </Link>
+          </div>
+        ) : (
+          <div className="mt-10 flex flex-col sm:flex-row justify-center gap-4">
+            <Link
+              href="/signup"
+              className="rounded-lg bg-white px-6 py-3 font-semibold text-gray-900 transition hover:bg-gray-200"
+            >
+              Get Started
+            </Link>
+
+            <Link
+              href="/login"
+              className="rounded-lg border border-gray-600 px-6 py-3 font-semibold text-white transition hover:bg-gray-800"
+            >
+              Login
+            </Link>
+          </div>
+        )}
 
         <div className="mt-16 grid gap-6 md:grid-cols-3">
           <div className="rounded-xl border border-gray-700 bg-gray-800 p-6">
