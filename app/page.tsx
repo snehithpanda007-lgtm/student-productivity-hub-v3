@@ -9,7 +9,7 @@ export default async function HomePage() {
   } = await supabase.auth.getUser();
 
   return (
-    <main className="min-h-screen bg-gray-900 text-white flex items-center justify-center px-6">
+    <main className="min-h-screen text-white flex items-center justify-center px-6">
       <div className="max-w-3xl text-center">
         <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight">
           Student Productivity Hub
