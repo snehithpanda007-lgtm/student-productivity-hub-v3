@@ -33,13 +33,8 @@ export default async function DashboardPage() {
   const tasks: Task[] = tasksResult.data ?? [];
   const notes: Note[] = notesResult.data ?? [];
 
-  const completedTasks = tasks.filter(
-    (task) => task.completed
-  ).length;
-
-  const pendingTasks = tasks.filter(
-    (task) => !task.completed
-  ).length;
+  const completedTasks = tasks.filter((task) => task.completed).length;
+  const pendingTasks = tasks.filter((task) => !task.completed).length;
 
   const totalTasks = tasks.length;
   const totalNotes = notes.length;
@@ -71,50 +66,72 @@ export default async function DashboardPage() {
     .slice(0, 5);
 
   return (
-    <div className="space-y-8">
-      <div>
-        <h1 className="text-4xl font-bold">
-          Dashboard
-        </h1>
+    <main className="min-h-screen text-white px-6 py-10">
+      <div className="mx-auto max-w-7xl space-y-10">
+        {/* Header */}
+        <div>
+          <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight">
+            Dashboard
+          </h1>
 
-        <p className="text-gray-400 mt-2">
-          Welcome back, {user.email}!
-        </p>
+          <p className="mt-4 text-lg text-gray-300 leading-relaxed">
+            Welcome back,{" "}
+            <span className="font-semibold text-white">
+              {user.email}
+            </span>
+            . Here's an overview of your productivity.
+          </p>
+        </div>
+
+        {/* Stats */}
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          <div className="rounded-xl border border-gray-700 bg-gray-800 p-6">
+            <StatCard
+              title="Completed Tasks"
+              value={completedTasks}
+              color="text-green-500"
+            />
+          </div>
+
+          <div className="rounded-xl border border-gray-700 bg-gray-800 p-6">
+            <StatCard
+              title="Pending Tasks"
+              value={pendingTasks}
+              color="text-yellow-500"
+            />
+          </div>
+
+          <div className="rounded-xl border border-gray-700 bg-gray-800 p-6">
+            <StatCard
+              title="Notes Created"
+              value={totalNotes}
+              color="text-blue-500"
+            />
+          </div>
+
+          <div className="rounded-xl border border-gray-700 bg-gray-800 p-6">
+            <StatCard
+              title="Productivity"
+              value={`${productivity}%`}
+              color="text-purple-500"
+            />
+          </div>
+        </div>
+
+        {/* Progress */}
+        <div className="rounded-xl border border-gray-700 bg-gray-800 p-6">
+          <ProgressCard
+            completedTasks={completedTasks}
+            totalTasks={totalTasks}
+            productivity={productivity}
+          />
+        </div>
+
+        {/* Recent Activity */}
+        <div className="rounded-xl border border-gray-700 bg-gray-800 p-6">
+          <RecentActivity activities={recentActivity} />
+        </div>
       </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <StatCard
-          title="Completed Tasks"
-          value={completedTasks}
-          color="text-green-500"
-        />
-
-        <StatCard
-          title="Pending Tasks"
-          value={pendingTasks}
-          color="text-yellow-500"
-        />
-
-        <StatCard
-          title="Notes Created"
-          value={totalNotes}
-          color="text-blue-500"
-        />
-
-        <StatCard
-          title="Productivity"
-          value={`${productivity}%`}
-          color="text-purple-500"
-        />
-      </div>
-
-      <ProgressCard
-        completedTasks={completedTasks}
-        totalTasks={totalTasks}
-        productivity={productivity}
-      />
-
-      <RecentActivity activities={recentActivity} />
-    </div>
+    </main>
   );
 }

@@ -112,31 +112,43 @@ export default function NotesManager({
   }
 
   return (
-    <div className="max-w-6xl mx-auto p-8">
-      <h1 className="text-4xl font-bold mb-8">
-        Notes Management
-      </h1>
+    <main className="min-h-screen text-white px-6 py-10">
+      <div className="mx-auto max-w-3xl">
+        <h1 className="text-4xl font-bold">
+          Notes Management
+        </h1>
 
-      <NoteForm
-        title={title}
-        content={content}
-        setTitle={setTitle}
-        setContent={setContent}
-        onSubmit={editingId ? updateNote : addNote}
-        editing={editingId !== null}
-      />
-
-      {notes.length === 0 ? (
-        <p className="text-gray-500 mt-6">
-          No notes created yet.
+        <p className="mt-2 text-gray-400">
+          Create, edit and organize your personal notes.
         </p>
-      ) : (
-        <NotesList
-          notes={notes}
-          onEdit={editNote}
-          onDelete={deleteNote}
-        />
-      )}
-    </div>
+
+        <div className="mt-8">
+          <NoteForm
+            title={title}
+            content={content}
+            setTitle={setTitle}
+            setContent={setContent}
+            onSubmit={editingId ? updateNote : addNote}
+            editing={editingId !== null}
+          />
+        </div>
+
+        {notes.length === 0 ? (
+          <div className="mt-6 rounded-xl border border-gray-700 bg-gray-800 p-6">
+            <p className="text-gray-400">
+              No notes created yet.
+            </p>
+          </div>
+        ) : (
+          <div className="mt-6">
+            <NotesList
+              notes={notes}
+              onEdit={editNote}
+              onDelete={deleteNote}
+            />
+          </div>
+        )}
+      </div>
+    </main>
   );
 }

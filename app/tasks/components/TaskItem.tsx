@@ -1,6 +1,6 @@
 "use client";
 
-import { Task } from "../types"
+import { Task } from "../types";
 
 interface Props {
   task: Task;
@@ -14,22 +14,21 @@ export default function TaskItem({
   onToggle,
 }: Props) {
   return (
-    <div className="flex justify-between items-center p-3 rounded mb-2 bg-gray-900">
-
-      <span
+    <div className="mb-3 flex items-center justify-between rounded-lg border border-gray-700 bg-gray-700 px-4 py-3">
+      <button
         onClick={() => onToggle(task.id)}
-        className={`cursor-pointer hover:text-gray-400 ${
+        className={`flex-1 text-left transition-colors cursor-pointer ${
           task.completed
-            ? "line-through text-gray-500"
-            : ""
+            ? "text-gray-400 line-through"
+            : "text-white hover:text-gray-300"
         }`}
       >
         {task.title}
-      </span>
+      </button>
 
       <button
         onClick={() => onDelete(task.id)}
-        className="text-red-600 cursor-pointer hover:text-red-700"
+        className="ml-4 rounded-lg bg-red-600 px-4 py-2 font-medium text-white transition hover:bg-red-700 cursor-pointer"
       >
         Delete
       </button>

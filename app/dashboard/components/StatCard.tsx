@@ -10,7 +10,7 @@ export default function StatCard({
   color,
 }: StatCardProps) {
   return (
-    <div className="bg-gray-900 rounded-xl shadow-lg p-6 hover:shadow-xl transition">
+    <div>
       <p className="text-gray-400 text-sm">
         {title}
       </p>

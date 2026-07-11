@@ -10,7 +10,7 @@ export default function ProgressCard({
   productivity,
 }: ProgressCardProps) {
   return (
-    <div className="bg-gray-900 rounded-xl p-6 shadow">
+    <div>
       <h2 className="text-xl font-semibold mb-4">
         Productivity Progress
       </h2>

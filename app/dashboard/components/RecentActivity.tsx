@@ -8,7 +8,7 @@ export default function RecentActivity({
   activities,
 }: RecentActivityProps) {
   return (
-    <div className="bg-gray-900 rounded-xl p-6 shadow">
+    <div>
       <h2 className="text-xl font-semibold mb-5">
         Recent Activity
       </h2>

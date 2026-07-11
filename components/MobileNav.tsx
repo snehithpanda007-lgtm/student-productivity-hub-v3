@@ -26,20 +26,22 @@ export default function MobileNav() {
   const pathname = usePathname();
 
   return (
-    <nav className="md:hidden bg-slate-900 text-white p-3 flex justify-around">
-      {links.map((link) => (
-        <Link
-          key={link.href}
-          href={link.href}
-          className={
-            pathname === link.href
-              ? "font-bold text-blue-400"
-              : ""
-          }
-        >
-          {link.name}
-        </Link>
-      ))}
+    <nav className="border-t border-gray-700 bg-gray-900 px-4 py-3 md:hidden">
+      <div className="flex items-center justify-around">
+        {links.map((link) => (
+          <Link
+            key={link.href}
+            href={link.href}
+            className={`text-sm font-medium transition-colors duration-200 ${
+              pathname === link.href
+                ? "text-blue-400 font-semibold"
+                : "text-gray-400 hover:text-white"
+            }`}
+          >
+            {link.name}
+          </Link>
+        ))}
+      </div>
     </nav>
   );
 }

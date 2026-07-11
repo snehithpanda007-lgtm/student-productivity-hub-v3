@@ -38,49 +38,67 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="max-w-md mx-auto mt-20 space-y-4">
-      <h1 className="text-3xl font-bold">
-        Login
-      </h1>
+    <main className="min-h-screen flex items-center justify-center px-6 py-10 text-white">
+      <div className="w-full max-w-md rounded-xl border border-gray-700 bg-gray-800 p-8">
+        <h1 className="text-4xl font-bold">
+          Login
+        </h1>
 
-      <input
-        type="email"
-        className="border p-2 w-full rounded"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
+        <p className="mt-2 text-gray-400">
+          Sign in to access your notes.
+        </p>
 
-      <input
-        type="password"
-        className="border p-2 w-full rounded"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") {
-            handleLogin();
-          }
-        }}
-      />
+        <div className="mt-8">
+          <label className="text-sm text-gray-400">
+            Email Address
+          </label>
 
-      <button
-        onClick={handleLogin}
-        disabled={loading}
-        className="bg-green-600 hover:bg-green-700 disabled:bg-gray-500 text-white px-4 py-2 rounded w-full"
-      >
-        {loading ? "Logging in..." : "Login"}
-      </button>
+          <input
+            type="email"
+            placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="mt-2 w-full rounded-lg bg-gray-700 px-4 py-3 text-white outline-none focus:ring-2 focus:ring-green-500"
+          />
+        </div>
 
-      <p className="text-center text-sm text-gray-500">
-        Don't have an account?{" "}
-        <Link
-          href="/signup"
-          className="text-green-600 hover:underline font-medium"
+        <div className="mt-5">
+          <label className="text-sm text-gray-400">
+            Password
+          </label>
+
+          <input
+            type="password"
+            placeholder="Enter your password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleLogin();
+              }
+            }}
+            className="mt-2 w-full rounded-lg bg-gray-700 px-4 py-3 text-white outline-none focus:ring-2 focus:ring-green-500"
+          />
+        </div>
+
+        <button
+          onClick={handleLogin}
+          disabled={loading}
+          className="mt-6 w-full rounded-lg bg-green-600 px-5 py-3 font-semibold hover:bg-green-700 disabled:bg-gray-600 cursor-pointer"
         >
-          Sign up
-        </Link>
-      </p>
-    </div>
+          {loading ? "Logging in..." : "Login"}
+        </button>
+
+        <p className="mt-6 text-center text-sm text-gray-400">
+          Don't have an account?{" "}
+          <Link
+            href="/signup"
+            className="font-medium text-green-400 hover:underline"
+          >
+            Sign Up
+          </Link>
+        </p>
+      </div>
+    </main>
   );
 }

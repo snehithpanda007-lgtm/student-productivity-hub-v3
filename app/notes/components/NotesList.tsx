@@ -16,14 +16,16 @@ export default function NotesList({
 }: Props) {
   if (notes.length === 0) {
     return (
-      <div className="text-center text-gray-500 mt-8">
-        No notes available.
+      <div className="rounded-xl border border-gray-700 bg-gray-800 p-6">
+        <p className="text-gray-400">
+          No notes available.
+        </p>
       </div>
     );
   }
 
   return (
-    <div className="grid gap-5 md:grid-cols-2">
+    <div className="space-y-6">
       {notes.map((note) => (
         <NoteCard
           key={note.id}

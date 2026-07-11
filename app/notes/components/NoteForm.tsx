@@ -18,30 +18,42 @@ export default function NoteForm({
   editing,
 }: NoteFormProps) {
   return (
-    <div className="bg-gray-900 shadow-md rounded-lg p-6 mb-6">
-      <h2 className="text-2xl font-semibold mb-4">
+    <div className="rounded-xl border border-gray-700 bg-gray-800 p-6">
+      <h2 className="text-2xl font-semibold">
         {editing ? "Edit Note" : "Create Note"}
       </h2>
 
-      <input
-        type="text"
-        placeholder="Title"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        className="bg-gray-800 w-full rounded-md p-3 mb-4 hover:bg-gray-700"
-      />
+      <div className="mt-6">
+        <label className="text-sm text-gray-400">
+          Title
+        </label>
 
-      <textarea
-        placeholder="Write your note..."
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-        rows={6}
-        className="bg-gray-800 w-full rounded-md p-3 mb-4 hover:bg-gray-700"
-      />
+        <input
+          type="text"
+          placeholder="Enter note title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          className="mt-2 w-full rounded-lg bg-gray-700 px-4 py-3 text-white outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
+
+      <div className="mt-5">
+        <label className="text-sm text-gray-400">
+          Content
+        </label>
+
+        <textarea
+          placeholder="Write your note..."
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          rows={6}
+          className="mt-2 w-full rounded-lg bg-gray-700 px-4 py-3 text-white outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+        />
+      </div>
 
       <button
         onClick={onSubmit}
-        className="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700"
+        className="mt-5 rounded-lg bg-blue-600 px-5 py-3 font-semibold hover:bg-blue-700 cursor-pointer"
       >
         {editing ? "Update Note" : "Add Note"}
       </button>

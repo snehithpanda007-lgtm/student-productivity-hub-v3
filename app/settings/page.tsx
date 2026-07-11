@@ -93,7 +93,7 @@ export default function SettingsPage() {
 
           <button
             onClick={updatePassword}
-            className="mt-5 rounded-lg bg-blue-600 px-5 py-3 font-semibold hover:bg-blue-700"
+            className="mt-5 rounded-lg bg-blue-600 px-5 py-3 font-semibold hover:bg-blue-700 cursor-pointer"
           >
             Update Password
           </button>
@@ -115,7 +115,7 @@ export default function SettingsPage() {
 
           <button
             onClick={logout}
-            className="mt-5 rounded-lg bg-red-600 px-5 py-3 font-semibold hover:bg-red-700"
+            className="mt-5 rounded-lg bg-red-600 px-5 py-3 font-semibold hover:bg-red-700 cursor-pointer"
           >
             Logout
           </button>

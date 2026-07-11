@@ -39,49 +39,67 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="max-w-md mx-auto mt-20 space-y-4">
-      <h1 className="text-3xl font-bold">
-        Sign Up
-      </h1>
+    <main className="min-h-screen flex items-center justify-center px-6 py-10 text-white">
+      <div className="w-full max-w-md rounded-xl border border-gray-700 bg-gray-800 p-8">
+        <h1 className="text-4xl font-bold">
+          Sign Up
+        </h1>
 
-      <input
-        type="email"
-        className="border p-2 w-full rounded"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
+        <p className="mt-2 text-gray-400">
+          Create an account to start managing your notes.
+        </p>
 
-      <input
-        type="password"
-        className="border p-2 w-full rounded"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") {
-            handleSignup();
-          }
-        }}
-      />
+        <div className="mt-8">
+          <label className="text-sm text-gray-400">
+            Email Address
+          </label>
 
-      <button
-        onClick={handleSignup}
-        disabled={loading}
-        className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-500 text-white px-4 py-2 rounded w-full"
-      >
-        {loading ? "Creating Account..." : "Sign Up"}
-      </button>
+          <input
+            type="email"
+            placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="mt-2 w-full rounded-lg bg-gray-700 px-4 py-3 text-white outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
 
-      <p className="text-center text-sm text-gray-500">
-        Already have an account?{" "}
-        <Link
-          href="/login"
-          className="text-blue-600 hover:underline font-medium"
+        <div className="mt-5">
+          <label className="text-sm text-gray-400">
+            Password
+          </label>
+
+          <input
+            type="password"
+            placeholder="Create a password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleSignup();
+              }
+            }}
+            className="mt-2 w-full rounded-lg bg-gray-700 px-4 py-3 text-white outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        <button
+          onClick={handleSignup}
+          disabled={loading}
+          className="mt-6 w-full rounded-lg bg-blue-600 px-5 py-3 font-semibold hover:bg-blue-700 disabled:bg-gray-600 cursor-pointer"
         >
-          Login
-        </Link>
-      </p>
-    </div>
+          {loading ? "Creating Account..." : "Sign Up"}
+        </button>
+
+        <p className="mt-6 text-center text-sm text-gray-400">
+          Already have an account?{" "}
+          <Link
+            href="/login"
+            className="font-medium text-blue-400 hover:underline"
+          >
+            Login
+          </Link>
+        </p>
+      </div>
+    </main>
   );
 }

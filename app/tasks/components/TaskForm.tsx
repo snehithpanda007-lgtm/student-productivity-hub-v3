@@ -12,24 +12,28 @@ export default function TaskForm({ onAdd }: Props) {
   const handleSubmit = () => {
     if (!title.trim()) return;
 
-    onAdd(title);
+    onAdd(title.trim());
     setTitle("");
   };
 
   return (
-    <div className="flex gap-2 mb-6">
+    <div className="mb-6 flex gap-3">
       <input
-        className="bg-gray-900 p-2 rounded flex-1 hover:bg-gray-800"
-        placeholder="New Task"
+        type="text"
+        placeholder="Enter a new task"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") handleSubmit();
+        }}
+        className="flex-1 rounded-lg bg-gray-700 px-4 py-3 text-white outline-none transition focus:ring-2 focus:ring-blue-500"
       />
 
       <button
         onClick={handleSubmit}
-        className="bg-blue-600 text-white px-4 rounded cursor-pointer hover:bg-blue-700"
+        className="rounded-lg bg-blue-600 px-5 py-3 font-semibold text-white transition hover:bg-blue-700 cursor-pointer"
       >
-        Add
+        Add Task
       </button>
     </div>
   );
